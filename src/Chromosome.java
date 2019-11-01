@@ -16,7 +16,7 @@ public class Chromosome {
 		for (int i = 0; i < genes.length; i++) {
 			double value = (Math.random()*((20)+1))-10;
 			if(value>10) {
-				genes[i]=10;
+				genes[i]=10; 
 			}
 			else if(value<-10) {
 				genes[i]=-10;
@@ -32,7 +32,7 @@ public class Chromosome {
 			double c=1;
 			double y=0;
 			for (int j=0;j<genes.length;j++) {
-				y+=c*genes[i];
+				y+=c*genes[j];
 				c*=x;
 			}
 			Point p=new Point();

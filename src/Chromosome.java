@@ -14,7 +14,7 @@ public class Chromosome {
 
 	public void generateGenes() {
 		for (int i = 0; i < genes.length; i++) {
-			double value = (Math.random()*((20)+1))-10;
+			double value = (Math.random()*21)-10;
 			if(value>10) {
 				genes[i]=10; 
 			}
@@ -39,15 +39,18 @@ public class Chromosome {
 			p.x=x;
 			p.y=y;
 			calcP.add(p);
+			//System.out.println(x+" "+y);
 		}
 	}
 	public void calcFitness(Vector<Point> actualP) {
 		calcY(actualP);
 		double c=0;
 		for(int i=0;i<actualP.size();i++) {
-			c+=(calcP.get(i).y-actualP.get(i).y)*(calcP.get(i).y-actualP.get(i).y);
+			double s=calcP.get(i).y-actualP.get(i).y;
+			c+=s*s;
 		}
-		fitness=(1/actualP.size())*c;
-
+		fitness= c/actualP.size();
+		
+		//System.out.println(fitness);
 	}
 }

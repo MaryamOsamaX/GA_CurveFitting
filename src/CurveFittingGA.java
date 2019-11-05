@@ -8,6 +8,7 @@ public class CurveFittingGA {
 	Vector<Point> actualP;
 	int popSize, d;
 	double bestV;
+	Vector<Point> bestP;
 	Chromosome sol;
 	Double LP = -10.0, UP = 10.0;
 
@@ -15,15 +16,16 @@ public class CurveFittingGA {
 
 		sol = new Chromosome(d + 1);
 		for (int i = 0; i < d + 1; i++) {
-			sol.genes[i] = 10000.0; 
+			sol.genes[i] = Double.MAX_VALUE;
 		}
-		bestV = 10000.0;
+		bestV = Double.MAX_VALUE;
 		pop = new Vector<Chromosome>();
 		actualP = new Vector<Point>();
+		bestP = new Vector<Point>();
 		actualP = actualP1;
 		popSize = popS;
 		this.d = d;
-
+		
 		for (int i = 0; i < popS; i++) {
 			pop.add(new Chromosome(d + 1));
 			pop.get(i).generateGenes();
@@ -96,7 +98,7 @@ public class CurveFittingGA {
 
 	public void mutation(Vector<Integer> crossed ,int t , int T) {
 		Random random = new Random();
-		Double b = 2.0, y = 0.0; // Dependency factor
+		Double b = 5.0, y = 0.0; // Dependency factor
 		for (int i = 0; i < crossed.size(); i++) {
 			for (int x = 0; x < pop.get(crossed.get(i)).genes.length; x++) {
 				Double rYN = random.nextDouble();
@@ -135,12 +137,12 @@ public class CurveFittingGA {
 
 	public void updateSolution() {
 		for (int i = 0; i < pop.size(); i++) {
-			if (bestV < pop.get(i).fitness) {
+			if (bestV > pop.get(i).fitness) {
 				bestV = pop.get(i).fitness;
 				for (int j = 0; j < sol.genes.length; j++) {
 					sol.genes[j] = pop.get(i).genes[j];
 				}
-
+				bestP=pop.get(i).calcP;
 				// System.out.println("best value = "+bestV+" -> "+Arrays.toString(sol.genes));
 			}
 		}
